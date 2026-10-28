@@ -1,0 +1,617 @@
+/* ==========================================================================
+   Gözlem Planlama Asistanı — TÜG Kurumsal Kimlik Teması
+   Marka rengi: #092BA6 | Fontlar: Bahnschrift, DIN Next LT Pro Condensed
+   Kaynak: https://trgozlemevleri.gov.tr/kurumsal/kurumsal-kimlik
+   ========================================================================== */
+
+/* ---------- Kurumsal fontlar ----------
+   Aşağıdaki .ttf dosyalarını TÜG kurumsal kimlik sayfasından indirip
+   projenin public/fonts/ klasörüne koy, path'ler otomatik eşleşecek.
+   https://trgozlemevleri.gov.tr/kurumsal/kurumsal-kimlik
+*/
+@font-face {
+  font-family: 'Bahnschrift';
+  src: url('/fonts/bahnschrift.ttf') format('truetype');
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DIN Next Condensed';
+  src: url('/fonts/dinnextltpro-lightcondensed.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DIN Next Condensed';
+  src: url('/fonts/dinnextltpro-mediumcond.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+
+:root {
+  /* Kurumsal renkler */
+  --color-bg: #FFFFFF;
+  --color-panel: #F4F6FB;
+  --color-panel-hover: #EAEEF8;
+  --color-border: #DCE2F0;
+  --color-text: #131A2E;
+  --color-text-muted: #616B85;
+
+  --color-accent: #092BA6;        /* TÜG kurumsal lacivert */
+  --color-accent-hover: #0B36CC;
+  --color-accent-dim: #C7D0EE;    /* açık lacivert - pasif/disabled durumlar */
+  --color-accent-soft: #EEF1FB;   /* rozet/etiket zemini */
+
+  --color-good: #1F8A5F;
+  --color-bad: #B23A3A;
+  --color-warning: #B8860B;
+
+  --font-display: 'DIN Next Condensed', 'Bahnschrift', system-ui, sans-serif;
+  --font-body: 'Bahnschrift', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+#root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ---------- Başlık alanı ---------- */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.4rem;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.4rem;
+  color: var(--color-accent);
+  border-left: 4px solid var(--color-accent);
+  padding-left: 0.75rem;
+}
+
+.night-info {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0.2rem 0;
+}
+
+.summary-line {
+  font-size: 0.95rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin: 0.2rem 0 1.5rem;
+}
+
+.summary-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.2rem 0 1.5rem;
+}
+
+.export-excel-btn {
+  background: var(--color-accent);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.export-excel-btn:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.export-excel-btn:disabled {
+  background: var(--color-accent-dim);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .summary-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .export-excel-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ---------- Form ---------- */
+form {
+  background: var(--color-panel);
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+form label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+form input[type="text"],
+form input[type="file"] {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.6rem 0.75rem;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+form input[type="text"]:focus,
+form input[type="file"]:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+form button {
+  justify-self: start;
+  background: var(--color-accent);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+form button:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+form button:disabled {
+  background: var(--color-accent-dim);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+form p {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* ---------- Hedef listesi ---------- */
+.target-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.target-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1.25rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.target-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 8px rgba(9, 43, 166, 0.08);
+}
+
+.target-card.unobservable {
+  opacity: 0.5;
+}
+
+.target-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.score-badge {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-accent-dim);
+}
+
+.target-card p {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0.2rem 0;
+}
+
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0.75rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text);
+}
+
+/* ---------- Skor dökümü ---------- */
+.score-breakdown {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--color-border);
+  display: grid;
+  gap: 0.45rem;
+}
+
+.score-bar-row {
+  display: grid;
+  grid-template-columns: 92px 1fr 34px;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.score-bar-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.score-bar-track {
+  height: 6px;
+  background: var(--color-panel);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.score-bar-fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.score-bar-value {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+.rejection-reasons {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.rejection-reasons li {
+  margin-bottom: 0.3rem;
+}
+
+.window-meta {
+  color: var(--color-good) !important;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.filter-tab {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-tab:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.filter-tab.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.pagination button {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 0.5rem 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.pagination button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.empty-state {
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.metrics-group {
+  margin: 0.6rem 0;
+}
+
+.metrics-label {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.metrics-group .metrics {
+  margin: 0;
+}
+
+.ask-box {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.ask-box h2 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  color: var(--color-accent);
+}
+
+.ask-box form {
+  display: flex;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ask-box input[type="text"] {
+  flex: 1;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.6rem 0.75rem;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+.ask-box button {
+  background: var(--color-accent);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ask-box button:disabled {
+  background: var(--color-accent-dim);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.ask-answer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  line-height: 1.6;
+  font-size: 0.92rem;
+  white-space: pre-wrap;
+}
+
+.ask-error {
+  margin-top: 1rem;
+  color: var(--color-bad);
+  font-size: 0.85rem;
+}
+
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.chat-message {
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  max-width: 85%;
+}
+
+.chat-message.user {
+  align-self: flex-end;
+  background: var(--color-accent);
+  color: #FFFFFF;
+}
+
+.chat-message.assistant {
+  align-self: flex-start;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(2px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border-radius: 6px;
+  z-index: 2000;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-text {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Target Input Section --- */
+.target-input-section {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-group {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 20px;
+}
+
+.radio-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: normal;
+  color: var(--color-text);
+}
+
+.text-input-area {
+  width: 100%;
+  padding: 10px;
+  resize: vertical;
+  font-family: var(--font-mono);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  color: var(--color-text);
+}
+
+.text-input-area:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(9, 43, 166, 0.15);
+}
+
+.file-input {
+  margin-top: 5px;
+  padding: 5px 0;
+}
+
+.help-text {
+  font-size: 0.85em;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.weather-warning-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(184, 134, 11, 0.1);
+  border: 1px solid rgba(184, 134, 11, 0.35);
+  color: var(--color-warning);
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin: 12px 0;
+  font-size: 0.9rem;
+}

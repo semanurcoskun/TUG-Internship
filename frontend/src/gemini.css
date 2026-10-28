@@ -1,0 +1,617 @@
+/* ---------- 1. KURUMSAL FONT TANIMLAMALARI ---------- */
+
+/* Bahnschrift - Ana Başlıklar ve Vurgulu Sayılar İçin */
+@font-face {
+  font-family: 'Bahnschrift';
+  src: url('./public/fonts/bahnschrift.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* DIN Next Medium Condensed - Butonlar, Alt Başlıklar ve Tablo Başlıkları İçin */
+@font-face {
+  font-family: 'DIN Next LT Pro Medium';
+  src: url('./public/fonts/dinnextltpro-mediumcond.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+/* DIN Next Light Condensed - Genel Metinler İçin */
+@font-face {
+  font-family: 'DIN Next LT Pro Light';
+  src: url('./public/fonts/dinnextltpro-lightcondensed.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: condensed;
+}
+
+/* ---------- 2. RENK PALETİ VE DEĞİŞKENLER ---------- */
+:root {
+  /* TUG Kurumsal Tema Renkleri */
+  --color-bg: #151A22;          
+  --color-panel: #1E2736;       
+  --color-panel-hover: #2A364A;
+  --color-border: #2D3A50;
+  --color-text: #F3F4F6;
+  --color-text-muted: #9CA3AF;
+  
+  --color-primary: #3498DB;     
+  --color-primary-hover: #2980B9;
+
+  --color-accent: #F1C40F;      
+  --color-accent-dim: #B7950B;
+  --color-good: #2ECC71;        
+  --color-bad: #E74C3C;         
+  --color-info: #9B59B6;        
+
+  /* 3 Farklı Kurumsal Fontun Değişkenlere Atanması */
+  --font-display: 'Bahnschrift', sans-serif; 
+  --font-heading: 'DIN Next LT Pro Medium', sans-serif; 
+  /* --font-body: 'DIN Next LT Pro Light', sans-serif;  */
+  --font-body: 'Bahnschrift', sans-serif; 
+  --font-mono: 'Courier New', Courier, monospace; 
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body); /* Tüm sayfa genelinde Light Cond */
+  line-height: 1.5;
+}
+
+#root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ---------- 3. BAŞLIK VE ÖZET ALANI ---------- */
+h1 {
+  font-family: var(--font-display); /* Ana başlıkta Bahnschrift */
+  font-size: 2.5rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.3rem;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(243,244,246,0.3), transparent),
+    radial-gradient(1.5px 1.5px at 40% 80%, rgba(243,244,246,0.2), transparent);
+}
+
+.night-info {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin: 0.2rem 0;
+}
+
+.summary-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.2rem 0 1.5rem;
+}
+
+.export-excel-btn {
+  background: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--font-heading); /* Butonda Medium Cond */
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.export-excel-btn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+/* ---------- 4. TUG KURUMSAL TABLO YAPISI ---------- */
+.tug-table-container {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border: 1px solid var(--color-border);
+}
+
+.tug-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff; 
+  color: #1a202c; 
+}
+
+.tug-table th {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-family: var(--font-heading); /* Tablo Başlıklarında Medium Cond */
+  font-size: 1.05rem;
+  padding: 12px 16px;
+  text-align: left;
+  border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+.tug-table th:last-child {
+  border-right: none;
+}
+
+.tug-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+  font-family: var(--font-body); /* Tablo Verilerinde Light Cond */
+}
+
+.tug-table tr:nth-child(even) td {
+  background-color: #f8fafc;
+}
+
+/* ---------- 5. FORM VE HEDEF KARTLARI ---------- */
+form, .ask-box {
+  background: var(--color-panel);
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.target-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.target-card {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.target-card:hover {
+  border-color: var(--color-primary);
+  background: var(--color-panel-hover);
+  transform: translateY(-2px);
+}
+
+.target-card h3 {
+  font-family: var(--font-heading); /* Kart başlığında Medium Cond */
+  font-size: 1.3rem;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ---------- 6. SKOR VE SAYILAR ---------- */
+.score-badge {
+  font-family: var(--font-display); /* Sayılarda Bahnschrift çok şık durur */
+  font-size: 0.95rem;
+  background: rgba(52, 152, 219, 0.15);
+  color: var(--color-primary);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-primary);
+}
+
+.score-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary-hover), var(--color-primary));
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.5);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* Ai Chat / Ask Box Butonu */
+.ask-box h2 {
+  font-family: var(--font-display); /* Başlıkta Bahnschrift */
+  font-size: 1.3rem;
+  color: var(--color-primary);
+  margin-top: 0;
+}
+
+.ask-box button, form button {
+  background: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-heading); /* Butonda Medium Cond */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ask-box button:hover:not(:disabled), form button:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+/* ---------- SCORE BREAKDOWN (İlerleme Çubukları) ---------- */
+.score-breakdown {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--color-border);
+  display: grid;
+  gap: 0.45rem;
+}
+
+.score-bar-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 34px; /* Metinler sığsın diye ilk sütunu biraz genişlettik */
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.score-bar-label {
+  font-family: var(--font-heading); /* DIN Next Medium */
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.score-bar-track {
+  height: 6px;
+  background: var(--color-bg); /* Çubuğun boş arka planı (Koyu lacivert) */
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.score-bar-fill {
+  height: 100%;
+  /* TUG Mavisi Gradienti */
+  background: linear-gradient(90deg, var(--color-primary-hover), var(--color-primary));
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.5); /* Hafif mavi parlama efekti */
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.score-bar-value {
+  font-family: var(--font-mono); /* Rakamlar hizalı dursun diye monospace */
+  font-size: 0.8rem;
+  color: var(--color-text); /* Rakamlar daha okunaklı olsun diye parlak renk */
+  text-align: right;
+}
+
+/* ---------- ASTRONOMY VE WEATHER ALT BAŞLIKLARI ---------- */
+.metrics-group {
+  margin: 1rem 0 0.5rem 0;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08); /* Bölümler arası hafif, şık bir ayırıcı */
+}
+
+.metrics-group:first-of-type {
+  border-top: none; /* İlk grupta üst çizgi olmasın */
+  padding-top: 0;
+}
+
+.metrics-label {
+  display: block;
+  font-family: var(--font-heading); /* DIN Next Medium Condensed */
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary); /* TUG Mavisi ile vurgu */
+  margin-bottom: 0.4rem;
+}
+
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0;
+  font-family: var(--font-body); /* DIN Next Light Condensed */
+  font-size: 0.9rem;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+/* Metrik değerlerindeki sayısal verilerin daha düzgün hizalanması için */
+.metrics span {
+  font-family: var(--font-mono); /* Rakamlar için Courier/Monospace */
+  font-size: 0.85rem;
+  color: var(--color-text-muted); /* Değerleri hafif grileştirerek başlıkları ön plana çıkar */
+}
+
+/* ---------- FİLTRELEME BUTONLARI (Observable / Unobservable / All) ---------- */
+.filter-tabs {
+  display: flex;
+  gap: 0.8rem; /* Butonlar arası boşluğu biraz açtık */
+  margin-bottom: 2rem; /* Kartlar ile olan mesafeyi artırdık */
+}
+
+.filter-tab {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px; /* Tam yuvarlak (999px) yerine daha modern, hafif kavisli köşeler */
+  font-family: var(--font-heading); /* DIN Next Medium Cond */
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-tab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+  background: var(--color-panel-hover);
+}
+
+.filter-tab.active {
+  background: var(--color-primary); /* Aktif olana TUG Mavisi verdik */
+  border-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3); /* Seçili olduğunu belirginleştiren parlama */
+}
+
+
+/* ---------- SAYFALAMA (Prev / Next) BUTONLARI ---------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem; /* Kartların altından uzaklaştırdık */
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border); /* Alt kısmı ayırmak için ince bir çizgi eklendi */
+}
+
+.pagination button {
+  background: transparent; /* Daha sade durması için arkaplanı transparan yaptık */
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-heading); /* DIN Next Medium Cond */
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(52, 152, 219, 0.05); /* Üzerine gelince hafif mavi bir belirti */
+}
+
+.pagination button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Page 1 of 9 yazısı vb. için */
+.pagination span,
+.pagination-info {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+/* ---------- 7. FORM İÇİ BOŞLUKLAR VE İNPUTLAR ---------- */
+form label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem; /* Sorular (labellar) ile kutular arasını açtık */
+}
+
+/* Genel input kutuları */
+form input[type="text"],
+form input[type="date"],
+form input[type="time"],
+.text-input-area {
+  width: 100%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.7rem 0.8rem;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  margin-bottom: 1rem; /* Elemanlar arası dikey boşluğu artırdık */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+form input:focus,
+.text-input-area:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* ---------- 8. RADIO BUTTONS (TOGGLES) ---------- */
+.toggle-group {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem; /* Yan yana durmaları için boşluk */
+  margin-bottom: 1rem;
+  margin-top: 0.2rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+/* ---------- 9. DOSYA YÜKLEME (FILE INPUT) ---------- */
+.file-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+}
+
+/* Varsayılan çirkin dosya seçme butonunu kurumsal temaya uydurma */
+.file-input::file-selector-button {
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  margin-right: 1rem;
+  font-family: var(--font-heading);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.file-input::file-selector-button:hover {
+  background: var(--color-panel-hover);
+  border-color: var(--color-primary);
+}
+
+/* ---------- 10. ASK BOX (YAN YANA YAPI) ---------- */
+.ask-box form {
+  display: flex;
+  flex-direction: row; /* Alt alta dizilmeyi iptal edip yan yana aldık */
+  align-items: center; /* Dikeyde ortaladık */
+  gap: 0.8rem;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ask-box input[type="text"] {
+  flex: 1; /* Kutunun kalan tüm alanı kaplamasını sağlar */
+  margin-bottom: 0; /* Yukarıdaki 1rem'lik genel margin'i burada sıfırladık */
+}
+
+.ask-box button {
+  width: auto; /* Butonun ekranı kaplamasını engeller, içeriğine göre boyutlanır */
+  white-space: nowrap; /* "Ask me" yazısının alt satıra düşmesini engeller */
+}
+
+/* ---------- 11. SOHBET GEÇMİŞİ (AI CHAT BUBBLES) ---------- */
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  max-height: 350px; /* Çok fazla soru sorulursa sayfa sonsuza uzamasın, scroll çıksın */
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* Chat alanı için ince, şık bir scrollbar */
+.chat-history::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-history::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+.chat-history::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.chat-message {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-family: var(--font-body); /* DIN Next Light Cond */
+  line-height: 1.5;
+  white-space: pre-wrap; /* Paragraf boşluklarını korur */
+  max-width: 85%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Hafif gölge */
+}
+
+/* Kullanıcı Mesajı (Sağa yaslı, TUG Mavisi) */
+.chat-message.user {
+  align-self: flex-end;
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: 12px 12px 0 12px; /* Konuşma balonu efekti (sağ alt köşe sivri) */
+}
+
+/* Yapay Zeka / Asistan Mesajı (Sola yaslı, Koyu zemin) */
+.chat-message.assistant {
+  align-self: flex-start;
+  background: var(--color-bg); 
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: 12px 12px 12px 0; /* Konuşma balonu efekti (sol alt köşe sivri) */
+}
+
+.chat-message > :first-child {
+  margin-top: 0;
+}
+
+.chat-message > :last-child {
+  margin-bottom: 0;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(21, 26, 34, 0.85); /* TUG panel rengine uyumlu yarı saydam arka plan */
+  backdrop-filter: blur(4px); /* Arkadaki yazıları hafifçe flulaştırır */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 2000; /* Tüm içeriğin üstünde kalması için */
+}
+
+/* Yükleme animasyonu çemberi */
+.loading-overlay .loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--color-border);
+  border-top-color: var(--color-primary); /* TUG Mavisi dönen kısım */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* "Thinking..." gibi metinlerin stili */
+.loading-overlay .loading-text,
+.loading-overlay p,
+.loading-overlay span {
+  font-family: var(--font-heading); /* DIN Next Medium Cond */
+  font-size: 1.1rem;
+  color: var(--color-text);
+  letter-spacing: 0.05em;
+  margin: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Animasyon Tanımlamaları */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
